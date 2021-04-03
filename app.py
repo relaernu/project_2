@@ -1,21 +1,12 @@
 import json
 from flask import Flask, request, jsonify, render_template
-# from flaskext.mysql import MySQL
-# import json
+import settings
+
+# define database to be used ("mysql"|"postgresql")
+settings.current_database = "mysql"
 import database
-import postgresql
 
 app = Flask(__name__)
-
-# for my sql
-# constr = database.connectionstrings["mysql"]
-# app.config['MYSQL_DATABASE_HOST'] = constr["server"]
-# app.config['MYSQL_DATABASE_PORT'] = constr["port"]
-# app.config['MYSQL_DATABASE_USER'] = constr["username"]
-# app.config['MYSQL_DATABASE_PASSWORD'] = constr["password"]
-# app.config['MYSQL_DATABASE_DB'] = constr["database"]
-# mysql = MySQL(app)
-
 
 @app.route("/")
 def index():
@@ -28,27 +19,21 @@ def all():
 @app.route("/total")
 def total():
     return jsonify({
-        "total" : postgresql.accident_total()
+        "total" : database.accident_total()
     })
 
-# mysql solution
-# def total():
-#     cur = mysql.get_db().cursor()
-#     cur.execute("SELECT COUNT(*) AS Total FROM ACCIDENT")
-#     row_headers=[x[0] for x in cur.description]
-#     rv = cur.fetchall()
-#     json_data=[]
-#     for result in rv:
-#         json_data.append(dict(zip(row_headers,result)))
-# #    return json.dumps(json_data)
-#     return jsonify(json_data)
+@app.route("/year_total")
+def year_total():
+    result = {}
+    rows = database.accident_year()
+    for row in rows:
+        result[row["year"]] = row["total"]
+    return jsonify(result)
 
-@app.route("/loadpostgresql")
-def loadpostgresql():
-    postgresql.importdata()
-    return jsonify({
-        "total" : postgresql.accident_total()
-    })
+@app.route("/importdata")
+def loadmysql():
+    rows = database.importdata()
+    return jsonify(rows)
 
 if __name__ == "__main__":
     app.run(debug=True)

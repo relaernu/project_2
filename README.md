@@ -15,15 +15,31 @@
     PERSON.csv              -- Accident people detail
     VEHICLE.csv             -- Accident vehicle detail
 
-4. create file database.py as follow:
-    connectionstrings = {
+4. create file database.py as follow (for database install on local machine, <ip> = localhost):
+
+    db = {
+        "mysql" : {
+            "server" : "<ip>",
+            "username" : "<user>",
+            "password" : "<pwd>",
+            "database" : "<database>",
+            "port" : <port>,    #default 3306
+            "dialect" : "mysql+mysqldb",
+            "quote" : "`"
+        },
         "postgresql" : {
-            "server" : "localhost",
-            "username" : "postgres",
-            "password" : "<password>",
-            "database" : "VICCrash"
+            "server" : "<ip>",
+            "username" : "<user>",
+            "password" : "<pwd>",
+            "database" : "<database>",
+            "port" : <port>,    #default 5432
+            "dialect" : "postgresql",
+            "quote" : '"'
         }
     }
+
+    global current_database     # to define a global variable so we can switch the database used
+    current_database = ""
 
 # load data to postgresql
 5. activate python environment:
@@ -33,10 +49,13 @@
     python app.py
 
 7. navigate to the web address:
-    http://localhost:5000/loadpostgresql
+    http://localhost:5000/importdata
 
 # after step 7 successfully done
-# get total accidents
-8. navigate to:
-    http://localhost:5000/total
+8. retrive results
+    (1) total accident
+        http://localhost:5000/total
+
+    (2) accident by year
+        http://localhost:5000/year_total
 
