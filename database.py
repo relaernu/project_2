@@ -13,7 +13,7 @@ q = settings.db[settings.current_database]["quote"]
 
 engine = create_engine(f'{setting["dialect"]}://{setting["username"]}:{setting["password"]}@{setting["server"]}/{setting["database"]}')
 
-files = ["ACCIDENT", "ACCIDENT_LOCATION", "ACCIDENT_EVENT", "NODE", "PERSON", "VEHICLE"]
+files = ["ACCIDENT", "ACCIDENT_LOCATION", "ACCIDENT_EVENT", "NODE", "PERSON", "VEHICLE", "ATMOSPHERIC_COND"]
 
 # function load data into postgresql
 def importdata():
@@ -60,6 +60,8 @@ def importdata():
             df.set_index("PERSON_ID", inplace=True)
         elif file == files[5]:
             df.set_index(["ACCIDENT_NO", "VEHICLE_ID"], inplace=True)
+        elif file == files[6]:
+            df.set_index("ACCIDENT_NO", inplace=True)
 
         # import to database
         df.to_sql(file, engine, if_exists="replace", dtype=dtypes)
@@ -111,6 +113,7 @@ def importdata():
     df_vehicle .set_index(["ACCIDENT_NO", "VEHICLE_ID"], inplace=True)
     df_vehicle.to_sql("Vehicle", engine, if_exists="replace")
 
+#### accidents overview ####
 # get total accidents
 def accident_total():
     result = engine.execute(f'SELECT COUNT(*) FROM {q}ACCIDENT{q}')
@@ -120,12 +123,72 @@ def accident_total():
 def accident_year():
     result = None
     if db == "mysql":
-        result = engine.execute(f'''SELECT year({q}ACCIDENTDATE{q}) AS {q}year{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                            GROUP BY {q}year{q}''')
+        result = engine.execute(f'''SELECT YEAR({q}ACCIDENTDATE{q}) AS {q}year{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+                GROUP BY {q}year{q}''')
     elif db == "postgresql":
         result = engine.execute(f'''SELECT EXTRACT(YEAR FROM {q}ACCIDENTDATE{q}) AS {q}year{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                            GROUP BY {q}year{q}''')
+                GROUP BY {q}year{q}''')
     return result.fetchall()
 
-def accident_quarter():
+# def accident_quarter():
+#     result = None
+
+# get total accidents group by month
+def accident_month():
     result = None
+    if db == "mysql":
+        result = engine.execute(f'''SELECT MONTH({q}ACCIDENTDATE{q}) AS {q}month{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+                            GROUP BY {q}month{q}''')
+    elif db == "postgresql":
+        result = engine.execute(f'''SELECT EXTRACT(MONTH FROM {q}ACCIDENTDATE{q}) AS {q}month{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+                GROUP BY {q}month{q}''')
+    return result.fetchall()
+
+# get total accidents group by day of week
+def accident_dayofweek():
+    result = engine.execute(f'''SELECT {q}Day Week Description{q} AS {q}day{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+                GROUP BY {q}day{q}''')
+    return result.fetchall()
+
+# total accidents group by hour of day
+def accident_time():
+    result = None
+    if db == "mysql":
+        result = engine.execute(f'''SELECT HOUR({q}ACCIDENTTIME{q}) AS {q}hour{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+                GROUP BY {q}hour{q}''')
+    elif db == "postgresql":
+        result = engine.execute(f'''SELECT EXTRACT(HOUR FROM {q}ACCIDENTTIME{q}) AS {q}hour{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+                GROUP BY {q}hour{q}''')
+    return result
+#### End of total overview
+
+#### Person over view (focus on Drivers and Motorcyclists only)
+def person_age():
+    result = engine.execute(f'''SELECT {q}Age Group{q} AS age, COUNT(1) AS total FROM {q}PERSON{q}
+                WHERE ({q}Road User Type Desc{q} = 'Drivers' OR {q}Road User Type Desc{q} = 'Motorcyclists') AND {q}AGE{q} >= 16
+                            GROUP BY {q}Age Group{q}''')
+    return result
+    
+def person_sex():
+    result = engine.execute(f'''SELECT {q}SEX{q} AS sex, COUNT(1) total FROM {q}PERSON{q}
+                WHERE ({q}Road User Type Desc{q} = 'Drivers' OR {q}Road User Type Desc{q} = 'Motorcyclists') AND {q}AGE{q} >= 16
+                GROUP BY {q}SEX{q}''')
+    return result
+
+# for all persons involed in the accidents
+def person_injured():
+    result = engine.execute(f'''SELECT {q}Inj Level Desc{q} AS injury, COUNT(1) AS total FROM {q}PERSON{q}
+                GROUP BY injury''')
+    return result
+### Injure level
+### 4	Not injured
+### 3	Other injury
+### 2	Serious injury
+### 1	Fatality
+
+
+#### vehicle overview
+
+
+
+#### weather condition overview

@@ -14,6 +14,7 @@
     NODE.csv                -- Accident location belongs to which node
     PERSON.csv              -- Accident people detail
     VEHICLE.csv             -- Accident vehicle detail
+    ATMOSPHERIC_COND.csv    -- Weather condition
 
 4. create file database.py as follow (for database install on local machine, <ip> = localhost):
 

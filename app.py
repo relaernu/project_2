@@ -22,13 +22,69 @@ def total():
         "total" : database.accident_total()
     })
 
-@app.route("/year_total")
-def year_total():
+# accidents number overview
+@app.route("/total/<peroid>")
+def get_total(peroid):
     result = {}
-    rows = database.accident_year()
+    rows = None
+    if peroid == "year":
+        rows = database.accident_year()
+    elif peroid == "month":
+        rows = database.accident_month()
+    elif peroid == "day":
+        rows = database.accident_dayofweek()
+    elif peroid == "hour":
+        rows = database.accident_time()
     for row in rows:
-        result[row["year"]] = row["total"]
+        result[row[peroid]] = row["total"]
     return jsonify(result)
+
+# person overview
+@app.route("/person/<info>")
+def get_person(info):
+    result = {}
+    rows = None
+    if info == "sex":
+        rows = database.person_sex()
+    elif info == "age":
+        rows = database.person_age()
+    elif info == "injury":
+        rows = database.person_injured()
+    for row in rows:
+        result[row[info]] = row["total"]
+    return jsonify(result)
+
+# vehicle overview
+@app.route("/vehicle/<info>")
+def get_vehicle(info):
+    result = {}
+    if info == "type":
+        None
+    elif info == "color":
+        None
+    elif info == "make":
+        None
+    return jsonify(result) 
+    
+# location overview
+
+
+# @app.route("/year_total")
+# def year_total():
+#     result = {}
+#     rows = database.accident_year()
+#     for row in rows:
+#         result[row["year"]] = row["total"]
+#     return jsonify(result)
+
+# @app.route("/month_total")
+# def month_total():
+#     result = {}
+#     rows = database.accident_month()
+#     for row in rows:
+#         result[row["month"]] = row["total"]
+#     return jsonify(result)
+
 
 @app.route("/importdata")
 def loadmysql():
