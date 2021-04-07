@@ -20,14 +20,14 @@
         ATMOSPHERIC_COND.csv    -- Weather condition
         features.json           -- Suburb boundaries geojson
 
-    (5) create file database.py as follow (for database install on local machine, <ip> = localhost):
+    (5) create file settings.py as follow (for database install on local machine, <ip> = localhost):
 
         db = {
             "mysql" : {
                 "server" : "<ip>",
                 "username" : "<user>",
                 "password" : "<pwd>",
-                "database" : "<database>",
+                "database" : "<database>",  # create the database before running any codes!!!!
                 "port" : <port>,    #default 3306
                 "dialect" : "mysql+mysqldb",
                 "quote" : "`"
@@ -36,7 +36,7 @@
                 "server" : "<ip>",
                 "username" : "<user>",
                 "password" : "<pwd>",
-                "database" : "<database>",
+                "database" : "<database>",  # create the database before running any codes!!!!
                 "port" : <port>,    #default 5432
                 "dialect" : "postgresql",
                 "quote" : '"'
@@ -67,8 +67,9 @@
         http://localhost:5000/vehicle/<color|make|type>
 
     (4) Accident event type
+        
 
     (5) Weather condition when accident happened
 
-    (6) Accident map 
+    (6) Accident map
 

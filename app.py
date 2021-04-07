@@ -1,9 +1,8 @@
-import json
 from flask import Flask, request, jsonify, render_template
 import settings
 
 # define database to be used ("mysql"|"postgresql")
-settings.current_database = "mysql"
+settings.current_database = "postgresql"
 import database
 
 app = Flask(__name__)

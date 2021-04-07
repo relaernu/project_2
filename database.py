@@ -7,6 +7,8 @@ import os
 from sqlalchemy.sql.expression import null
 import settings
 
+print(settings.current_database)
+
 setting = settings.db[settings.current_database]
 db = settings.current_database
 q = settings.db[settings.current_database]["quote"]
