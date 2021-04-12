@@ -20,6 +20,10 @@ function currentApi() {
     return url + currentX;
 }
 
+function capital(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
 function resize(peroid) {
     var svg = d3.select(current_id).select("svg");
     if (!svg.empty()) {
@@ -30,10 +34,10 @@ function resize(peroid) {
     var svgHeight = (window.innerHeight - $("#header").outerHeight() - $(current_id).parent().children(':first-child').outerHeight()) / 3
 
     var margin = {
-        top: 10,
+        top: 20,
         left: 40,
         bottom: 40,
-        right: 10
+        right: 30
     };
 
     var chartHeight = svgHeight - margin.top - margin.bottom;
@@ -105,9 +109,25 @@ function resize(peroid) {
             .attr("stroke-width", 5)
             .attr("d", lineGenerator(points));
 
+        var xLabels = chartGroup.append("g")
+            // .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + 20})`);
 
+        xLabels.append("text")
+            .attr("x", chartWidth)
+            .attr("y", chartHeight + 16)
+            .attr("font-size", "smaller")
+            .attr("fill", "blue")
+            .text(capital(currentX));
 
-        
+        var yLabels = chartGroup.append("g")
+        //     .attr("transform", `translate(-20, ${chartHeight /2}) rotate(-90)`);
+
+        yLabels.append("text")
+            .attr("x", -40)
+            .attr("y", -10)
+            .attr("font-size", "smaller")
+            .attr("fill", "blue")
+            .text(capital(currentY));
     });
     
     
