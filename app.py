@@ -22,20 +22,24 @@ def total():
     })
 
 # accidents number overview
-@app.route("/total/<peroid>")
-def get_total(peroid):
-    result = {}
+@app.route("/total/<period>")
+def get_total(period):
+    result = []
     rows = None
-    if peroid == "year":
+    if period == "year":
         rows = database.accident_year()
-    elif peroid == "month":
+    elif period == "month":
         rows = database.accident_month()
-    elif peroid == "day":
+    elif period == "day":
         rows = database.accident_dayofweek()
-    elif peroid == "hour":
+    elif period == "hour":
         rows = database.accident_time()
     for row in rows:
-        result[row[peroid]] = row["total"]
+        result.append({
+            period : row[period],
+            "total" : row["total"]
+        })
+#        result[row[period]] = row["total"]
     return jsonify(result)
 
 # person overview

@@ -126,10 +126,10 @@ def accident_year():
     result = None
     if db == "mysql":
         result = engine.execute(f'''SELECT YEAR({q}ACCIDENTDATE{q}) AS {q}year{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}year{q}''')
+                GROUP BY {q}year{q} ORDER BY {q}year{q}''')
     elif db == "postgresql":
         result = engine.execute(f'''SELECT EXTRACT(YEAR FROM {q}ACCIDENTDATE{q}) AS {q}year{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}year{q}''')
+                GROUP BY {q}year{q} ORDER BY {q}year{q}''')
     return result.fetchall()
 
 # def accident_quarter():
@@ -140,16 +140,16 @@ def accident_month():
     result = None
     if db == "mysql":
         result = engine.execute(f'''SELECT MONTH({q}ACCIDENTDATE{q}) AS {q}month{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                            GROUP BY {q}month{q}''')
+                            GROUP BY {q}month{q} ORDER BY {q}month{q}''')
     elif db == "postgresql":
         result = engine.execute(f'''SELECT EXTRACT(MONTH FROM {q}ACCIDENTDATE{q}) AS {q}month{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}month{q}''')
+                GROUP BY {q}month{q} ORDER BY {q}month{q}''')
     return result.fetchall()
 
 # get total accidents group by day of week
 def accident_dayofweek():
     result = engine.execute(f'''SELECT {q}Day Week Description{q} AS {q}day{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}day{q}''')
+                GROUP BY {q}day{q} ORDER BY {q}day{q}''')
     return result.fetchall()
 
 # total accidents group by hour of day
@@ -157,10 +157,10 @@ def accident_time():
     result = None
     if db == "mysql":
         result = engine.execute(f'''SELECT HOUR({q}ACCIDENTTIME{q}) AS {q}hour{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}hour{q}''')
+                GROUP BY {q}hour{q} ORDER BY {q}hour{q}''')
     elif db == "postgresql":
         result = engine.execute(f'''SELECT EXTRACT(HOUR FROM {q}ACCIDENTTIME{q}) AS {q}hour{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}hour{q}''')
+                GROUP BY {q}hour{q} ORDER BY {q}hour{q}''')
     return result
 #### End of total overview
 
