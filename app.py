@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, url_for, json
 import settings
 
 # define database to be used ("mysql"|"postgresql")
@@ -76,8 +76,19 @@ def get_vehicle(info):
 @app.route("/location")
 def get_location():
     result = []
-
+    rows = database.location()
+    for row in rows:
+        result.append({
+            "region" : row["REGION_NAME"],
+            "lat" : row["Lat"],
+            "lon" : row["Long"]
+        })
     return jsonify(result)
+
+@app.route("/boundaries")
+def get_boundaries():
+    data = json.load(open("static/data/features.json"))
+    return jsonify(data)
 
 # @app.route("/year_total")
 # def year_total():
