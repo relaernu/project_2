@@ -35,8 +35,10 @@
               <div class="col-12" id="period"></div>
             </div>
             <div class="row">
-              <div class="col-12 text-center">
+              <div class="col-6">
                 <h5>People Summary</h5>
+              </div>
+              <div class="col-6" id="personbtn">
               </div>
               <div class="col-12" id="person"></div>
             </div>
@@ -92,15 +94,15 @@
 
 
     <!-- for flask -->
-    
+
     <script src="{{ url_for('static',filename='js/period.js') }}"></script>
-    <!-- <script src="{{ url_for('static',filename='js/person.js') }}"></script>
-    <script src="{{ url_for('static',filename='js/vehicle.js') }}"></script>
+    <script src="{{ url_for('static',filename='js/person.js') }}"></script>
+    <!-- <script src="{{ url_for('static',filename='js/vehicle.js') }}"></script>
     <script src="{{ url_for('static',filename='js/map.js') }}"></script> -->
-     
+
 
     <!-- for test -->
-<!--     
+<!--
      <script src="../static/js/period.js"></script>
      <script src="../static/js/person.js"></script>
      <script src="../static/js/vehicle.js"></script>

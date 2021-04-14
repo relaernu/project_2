@@ -54,7 +54,10 @@ def get_person(info):
     elif info == "injury":
         rows = database.person_injured()
     for row in rows:
-        result[row[info]] = row["total"]
+        result.append({
+            info : row[info],
+            "total" : row["total"]
+        })
     return jsonify(result)
 
 # vehicle overview
