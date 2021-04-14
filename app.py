@@ -45,7 +45,7 @@ def get_total(period):
 # person overview
 @app.route("/person/<info>")
 def get_person(info):
-    result = {}
+    result = []
     rows = None
     if info == "sex":
         rows = database.person_sex()
@@ -73,7 +73,11 @@ def get_vehicle(info):
     return jsonify(result) 
     
 # location overview
+@app.route("/location")
+def get_location():
+    result = []
 
+    return jsonify(result)
 
 # @app.route("/year_total")
 # def year_total():

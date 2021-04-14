@@ -7,3 +7,16 @@ a.badge.active {
     border-color:white;
     border-width: 1px;
 }
+
+.bar {
+    fill: orange;
+  }
+  
+  .bar:hover {
+    fill: green;
+  }
+
+.bartext {
+    font-size: smaller;
+    fill: "red";
+}

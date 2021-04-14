@@ -15,7 +15,7 @@ function period() {
     };
 
     var currentX = axisNames[0];
-    var currentY = axisNames[4];
+    var currentY = axisNames[axisNames.length - 1];
 
     function addButtons() {
         var div = d3.select(button_id);
@@ -67,7 +67,7 @@ function period() {
         var chartGroup = svg.append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-        console.log(currentApi());
+        // console.log(currentApi());
 
         d3.json(currentApi()).then(function (data) {
             // d3.select("body").select("#total").text(data.Total);
@@ -77,7 +77,7 @@ function period() {
                     d[currentY] = +d[currentY]
             });
 
-            console.log(data.length);
+            // console.log(data.length);
 
 
             var xScale = xScaleFunc(chartWidth, data);
@@ -180,7 +180,7 @@ function period() {
     resize(currentX);
 
     function xScaleFunc(width, data) {
-        console.log(data);
+        // console.log(data);
         // define padding pixels
         var padding = 20;
         // get x scale
@@ -204,7 +204,7 @@ function period() {
 
     function yScaleFunc(height, data) {
         // define padding pixels
-        console.log(data);
+        // console.log(data);
         var padding = 20;
         // get y scale
         var min = d3.min(data, d => d[currentY]);
