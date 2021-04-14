@@ -196,7 +196,7 @@ def person_injured():
 ### 1	Fatality
 
 def location():
-    result = engine.execute(f'''SELECT {q}REGION_NAME{q}, {q}Lat{q}, {q}Long{q} FROM {q}NODE{q}''')
+    result = engine.execute(f'''SELECT {q}LGA_NAME{q} AS , {q}Lat{q}, {q}Long{q} FROM {q}NODE{q}''')
     return result
 
 
