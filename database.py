@@ -148,8 +148,15 @@ def accident_month():
 
 # get total accidents group by day of week
 def accident_dayofweek():
-    result = engine.execute(f'''SELECT {q}Day Week Description{q} AS {q}day{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
-                GROUP BY {q}day{q} ORDER BY {q}day{q}''')
+    result = engine.execute(f'''SELECT CASE {q}Day Week Description{q}
+		WHEN 'Sunday' THEN 0 
+		WHEN 'Monday' THEN 1 
+		WHEN 'Tuesday' THEN 2
+		WHEN 'Wednesday' THEN 3
+		WHEN 'Thursday' THEN 4
+		WHEN 'Friday' THEN 5
+		WHEN 'Saturday' THEN 6 END AS {q}day{q}, COUNT(1) AS total FROM {q}ACCIDENT{q}
+        GROUP BY {q}day{q} ORDER BY {q}day{q}''')
     return result.fetchall()
 
 # total accidents group by hour of day

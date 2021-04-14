@@ -1,0 +1,9 @@
+a.badge {
+    margin-left: 2px;
+}
+
+
+a.badge.active {
+    border-color:white;
+    border-width: 1px;
+}

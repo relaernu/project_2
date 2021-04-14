@@ -1,8 +1,9 @@
-var url = "http://localhost:5000/total/";
+var url = "/total/";
 
 var axisNames = ["year", "month", "day", "hour", "total"];
 
 var current_id="#period";
+var button_id="#periodbtn";
 
 var axisDefs = {
     year: "Total Accidents by Year",
@@ -14,6 +15,19 @@ var axisDefs = {
 
 var currentX = axisNames[0];
 var currentY = axisNames[4];
+
+function addButtons() {
+    var div = d3.select(button_id);
+    for(var i=0;i<axisNames.length-1;i++) {
+        div.append("a")
+            .classed("badge badge-success", true)
+            .attr("href", "#")
+            .attr("value", axisNames[i])
+            .text(capital(axisNames[i]))
+    }
+}
+
+addButtons();
 
 //event.preventDefault()
 function currentApi() {
@@ -62,7 +76,8 @@ function resize(peroid) {
             d[currentY] = +d[currentY]
         });
 
-        console.log(data);
+        console.log(data.length);
+
 
         var xScale = xScaleFunc(chartWidth, data);
         var yScale = yScaleFunc(chartHeight, data);
@@ -82,7 +97,6 @@ function resize(peroid) {
             .duration(500)
             .call(yAxis);
 
-        console.log(xScale(2006));
         var radius = 5;
         
         var circleGroup = chartGroup.append("g");
@@ -102,7 +116,7 @@ function resize(peroid) {
         //     .attr("r", radius);
 
         var lineGenerator = d3.line();
-        var points = data.map(d => [xScale(d.year), yScale(d.total)]);
+        var points = data.map(d => [xScale(d[currentX]), yScale(d.total)]);
         var lines = circleGroup.append("path")
             .attr("fill", "none")
             .attr("stroke", "blue")
@@ -128,6 +142,35 @@ function resize(peroid) {
             .attr("font-size", "smaller")
             .attr("fill", "blue")
             .text(capital(currentY));
+
+        // add function to button
+        d3.select(button_id).selectAll("a").on("click", function() {
+            var value = d3.select(this).attr("value");
+            if (value === currentX) {
+                d3.select(this)
+                    .classed("active", true);
+                return;
+            }
+            else {
+                currentX = value;
+                d3.select(this)
+                    .classed("active", false);
+                resize();
+            }
+        });
+        
+
+        // xLabels.selectAll("text")
+        // .on("click", function() {
+        //     var value = d3.select(this).attr("value");
+        //     if (value === currentX) {
+        //         return;
+        //     }
+        //     else {
+        //         currentX = value;
+        //         resize();
+        //     }
+        // });
     });
     
     
@@ -138,7 +181,7 @@ resize(currentX);
 function xScaleFunc(width, data) {
     console.log(data);
     // define padding pixels
-    var padding = 30;
+    var padding = 20;
     // get x scale
     var min = d3.min(data, d => d[currentX]);
     var max = d3.max(data, d => d[currentX]);
@@ -153,7 +196,7 @@ function xScaleFunc(width, data) {
     // reset scale with padding
     xLinearScale = d3.scaleLinear()
                          .domain([left, right])
-                         .range([0, width]);
+                         .range([0, width])
 
     return xLinearScale;
 }
@@ -161,7 +204,7 @@ function xScaleFunc(width, data) {
 function yScaleFunc(height, data) {
     // define padding pixels
     console.log(data);
-    var padding = 30;
+    var padding = 20;
     // get y scale
     var min = d3.min(data, d => d[currentY]);
     var max = d3.max(data, d => d[currentY]);
