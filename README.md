@@ -1,4 +1,11 @@
 # project_2
+0. System Requirements
+    (1) Python: version 3.8.5 or above
+    (2) Pandas: version 1.2.3 or above
+    (3) psycopg2: 2.8.6 or above
+    (4) SQLAlchemy: 1.3.22 or above
+    (5) Flask: 1.1.2 or above
+    (6) mysqlclient: 2.0.3 or above (only for using mysql database only)
 
 1. preparation
     (1) download current victoria Crash Stats dataset:
@@ -20,7 +27,7 @@
         ATMOSPHERIC_COND.csv    -- Weather condition
         features.json           -- Local Government geojson (to man)
 
-    (5) create file settings.py as follow (for database install on local machine, <ip> = localhost):
+    (5) create file settings.py as follow (for database install on local machine, <ip> = localhost or 127.0.0.1):
 
         db = {
             "mysql" : {
@@ -45,6 +52,9 @@
 
         global current_database     # to define a global variable so we can switch the database used
         current_database = ""
+    
+    (6) under path "/static/js" create a file "config.js" which include only one line:
+        const API_KEY = "<YOUR OpenStreetMap API KEY>";
 
 2. Load data
     (1) choose database by changing the following line in app.py
@@ -66,10 +76,14 @@
     (3) Vehicles involved in accidents group by color, make and type
         http://localhost:5000/vehicle/<color|make|type>
 
-    (4) Accident event type
+    (4) Accident event type (not in used)
         
+    (5) Weather condition when accident happened (not in used)
 
-    (5) Weather condition when accident happened
+    (6) Retrive all accident locations
+        http://localhost:5000/location
 
-    (6) Accident map
+    (7) Retrive top 10 postcode blackspot:
+        http://localhost:5000/blackspot 
+
 
