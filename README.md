@@ -7,8 +7,8 @@
     (2) dataset metadata:
         https://data.vicroads.vic.gov.au/Metadata/Crash%20Stats%20-%20Data%20Extract%20-%20Open%20Data.html
 
-    (3) VIC Suburb/Locality Boundaries geojson:
-        https://data.gov.au/geoserver/vic-suburb-locality-boundaries-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_af33dd8c_0534_4e18_9245_fc64440f742e&outputFormat=json
+    (3) VIC Local Government Boundaries geojson:
+        https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json
 
     (4) unzip and put following files into path static/data/:
         ACCIDENT.csv            -- Accident records
@@ -18,7 +18,7 @@
         PERSON.csv              -- Accident people detail
         VEHICLE.csv             -- Accident vehicle detail
         ATMOSPHERIC_COND.csv    -- Weather condition
-        features.json           -- Suburb boundaries geojson
+        features.json           -- Local Government geojson (to man)
 
     (5) create file settings.py as follow (for database install on local machine, <ip> = localhost):
 

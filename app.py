@@ -79,10 +79,23 @@ def get_location():
     rows = database.location()
     for row in rows:
         result.append({
-            "region" : row["REGION_NAME"],
-            "lat" : row["Lat"],
-            "lon" : row["Long"]
+            "region" : row["region"],
+            "lat" : row["lat"],
+            "lon" : row["lon"]
         })
+    return jsonify(result)
+
+@app.route("/location/<info>")
+def get_locations(info):
+    result = []
+    rows = None
+    if info == "blackspot":
+        rows = database.location_top10()
+        for row in rows:
+            result.append({
+                "postcode" : row["postcode"],
+                "total" : row["total"]
+            })
     return jsonify(result)
 
 @app.route("/boundaries")

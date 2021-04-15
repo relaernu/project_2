@@ -196,10 +196,16 @@ def person_injured():
 ### 1	Fatality
 
 def location():
-    result = engine.execute(f'''SELECT {q}LGA_NAME{q} AS , {q}Lat{q}, {q}Long{q} FROM {q}NODE{q}''')
+    result = engine.execute(f'''SELECT {q}LGA_NAME{q} AS region, {q}Lat{q} AS lat, {q}Long{q} AS lon FROM {q}NODE{q}''')
     return result
 
-
+### Top 10 Black Postcode
+def location_top10():
+    result = engine.execute(f'''SELECT {q}POSTCODE_NO{q} AS postcode, COUNT(1) AS total FROM {q}NODE{q}
+                                GROUP BY {q}POSTCODE_NO{q}
+                                ORDER BY 2 DESC
+                                LIMIT 10''')
+    return result
 
 
 #### vehicle overview
@@ -207,3 +213,7 @@ def location():
 
 
 #### weather condition overview
+
+
+
+

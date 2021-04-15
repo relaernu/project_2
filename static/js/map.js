@@ -13,11 +13,6 @@ function map() {
         .style("height", mapHeight+"px")
         .style("padding", "40px");
 
-
-    function boundaries() {
-
-    }
-
     function basicMap() {
         var streetmap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
             attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
@@ -40,13 +35,47 @@ function map() {
             layers: [streetmap]
         });
 
+        addBoundaries(myMap, boundaries_url);
+        addHeat(myMap, location_url);
         return myMap;
     }
 
     accMap = basicMap();
 
+    function addHeat(map, url) {
+        d3.json(url).then(function(data) {
+            console.log(data);
+            var heatArray = [];
+            data.forEach(d => {
+                if (d.lat && d.lon) {
+                    heatArray.push([d.lat, d.lon]);
+                }
+            });
+            var heat = L.heatLayer(heatArray, {
+                radius: 25,
+                blur: 35
+            }).addTo(map);
+        });
+    }
     // boundaries too many lines, not doing
 
+    function addBoundaries(map, url) {
+        d3.json(url).then(function (data) {
+            // Creating a GeoJSON layer with the retrieved data
+            L.geoJson(data, {
+                style: function(feature) {
+                  return {
+                    color: "white",
+                    // fillColor: chooseColor(feature.properties.borough),
+                    fillOpacity: 0.5,
+                    weight: 1.5
+                  };
+                }
+            }).addTo(myMap);
+
+            L.geoJson(data).addTo(map);
+        });
+    }
     // d3.json(boundaries_url).then(function(data) {
     //     // Creating a GeoJSON layer with the retrieved data
     //     L.geoJson(data).addTo(accMap);

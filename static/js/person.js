@@ -219,13 +219,13 @@ function person() {
             .range([height, 0]);
 
         // // get the actual value for padding 50px to the y scale on top & bottom
-        var top = yLinearScale.invert(height + padding);
-        var bottom = yLinearScale.invert(-padding);
+        // var top = yLinearScale.invert(height + padding);
+        // var bottom = yLinearScale.invert(-padding);
 
-        // reset scale with padding
-        yLinearScale = d3.scaleLinear()
-            .domain([min, bottom])
-            .range([height, 0]);
+        // // reset scale with padding
+        // yLinearScale = d3.scaleLinear()
+        //     .domain([min, bottom])
+        //     .range([height, 0]);
 
         return yLinearScale;
     }
