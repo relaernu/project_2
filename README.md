@@ -57,8 +57,8 @@
         const API_KEY = "<YOUR OpenStreetMap API KEY>";
 
 2. Load data
-    (1) choose database by changing the following line in app.py
-        settings.current_database = <mysql|postgresql> 
+    (1) choose database by changing the following line in settings.py
+        current_database = "<mysql|postgresql>"
     (2) activate python environment:
         source activate PythonData
     (3) run flask server:

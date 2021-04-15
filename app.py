@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify, render_template, url_for, json
 import settings
 
 # define database to be used ("mysql"|"postgresql")
-settings.current_database = "postgresql"
+# settings.current_database = "postgresql"
+# print(settings.current_database)
 import database
 
 app = Flask(__name__)
@@ -132,4 +133,4 @@ def loadmysql():
     return jsonify(rows)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0",debug=True)

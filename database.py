@@ -209,29 +209,50 @@ def location_top10():
 
 
 #### vehicle overview
-# color
+# top 10 color
 def vehicle_color():
     result = engine.execute(f'''SELECT {q}VEHICLE_COLOUR_1{q} AS color, COUNT(1) AS total
                                 FROM {q}VEHICLE{q} WHERE TRIM({q}VEHICLE_COLOUR_1{q}) != ''
                                 AND TRIM({q}VEHICLE_COLOUR_1{q}) != 'ZZ'
                                 GROUP BY {q}VEHICLE_COLOUR_1{q}
-                                ORDER BY 2 DESC''')
+                                ORDER BY 2 DESC
+                                LIMIT 10''')
     return result
 
 # top 10 make
 def vehicle_make():
-    result = engine.execute(f'''SELECT TRIM({q}VEHICLE_MAKE{q}) AS make, COUNT(1) as total FROM {q}VEHICLE{q}
-                                WHERE TRIM({q}VEHICLE_MAKE{q}) != '' AND TRIM({q}VEHICLE_MAKE{q}) != 'UNKN'
-                                GROUP BY {q}VEHICLE_MAKE{q}
+    result = engine.execute(f'''WITH top10 (make, total)
+                                AS
+                                (
+                                SELECT "VEHICLE_MAKE", COUNT(1) FROM "VEHICLE"
+                                WHERE TRIM("VEHICLE_MAKE") != '' AND TRIM("VEHICLE_MAKE") != 'UNKN'
+                                GROUP BY "VEHICLE_MAKE"
                                 ORDER BY 2 DESC
-                                LIMIT 10''')
-    return result
+                                LIMIT 10),
+                                rest (make, total)
+                                AS
+                                (
+                                	SELECT 'OTHER', ((SELECT COUNT(*) FROM "VEHICLE") - (SELECT COUNT(*) FROM top10))
+                                )
+                                SELECT * FROM top10
+                                UNION
+                                SELECT * FROM rest
+                                ORDER BY 2 DESC''')
+# def vehicle_make():
+#     result = engine.execute(f'''SELECT TRIM({q}VEHICLE_MAKE{q}) AS make, COUNT(1) as total FROM {q}VEHICLE{q}
+#                                 WHERE TRIM({q}VEHICLE_MAKE{q}) != '' AND TRIM({q}VEHICLE_MAKE{q}) != 'UNKN'
+#                                 GROUP BY {q}VEHICLE_MAKE{q}
+#                                 ORDER BY 2 DESC
+#                                 LIMIT 10''')
+#     return result
+
 
 # top 10 vechicle type
 def vehicle_type():
     result = engine.execute(f'''SELECT {q}Vehicle Type Desc{q} AS type, COUNT(1) AS total FROM {q}VEHICLE{q}
                                 GROUP BY {q}Vehicle Type Desc{q}
-                                ORDER BY 2 DESC''')
+                                ORDER BY 2 DESC
+                                LIMIT 10''')
     return result
 
 #### weather condition overview

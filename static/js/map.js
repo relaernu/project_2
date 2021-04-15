@@ -78,7 +78,7 @@ function map() {
                         mouseover: function (event) {
                             layer = event.target;
                             layer.setStyle({
-                                fillOpacity: 0.9
+                                fillOpacity: 0.1
                             });
                         },
                         // When the cursor no longer hovers over a map feature - when the mouseout event occurs - the feature's opacity reverts back to 50%
