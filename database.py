@@ -209,8 +209,30 @@ def location_top10():
 
 
 #### vehicle overview
+# color
+def vehicle_color():
+    result = engine.execute(f'''SELECT {q}VEHICLE_COLOUR_1{q} AS color, COUNT(1) AS total
+                                FROM {q}VEHICLE{q} WHERE TRIM({q}VEHICLE_COLOUR_1{q}) != ''
+                                AND TRIM({q}VEHICLE_COLOUR_1{q}) != 'ZZ'
+                                GROUP BY {q}VEHICLE_COLOUR_1{q}
+                                ORDER BY 2 DESC''')
+    return result
 
+# top 10 make
+def vehicle_make():
+    result = engine.execute(f'''SELECT TRIM({q}VEHICLE_MAKE{q}) AS make, COUNT(1) as total FROM {q}VEHICLE{q}
+                                WHERE TRIM({q}VEHICLE_MAKE{q}) != '' AND TRIM({q}VEHICLE_MAKE{q}) != 'UNKN'
+                                GROUP BY {q}VEHICLE_MAKE{q}
+                                ORDER BY 2 DESC
+                                LIMIT 10''')
+    return result
 
+# top 10 vechicle type
+def vehicle_type():
+    result = engine.execute(f'''SELECT {q}Vehicle Type Desc{q} AS type, COUNT(1) AS total FROM {q}VEHICLE{q}
+                                GROUP BY {q}Vehicle Type Desc{q}
+                                ORDER BY 2 DESC''')
+    return result
 
 #### weather condition overview
 

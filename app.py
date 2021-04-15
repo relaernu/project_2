@@ -63,15 +63,21 @@ def get_person(info):
 # vehicle overview
 @app.route("/vehicle/<info>")
 def get_vehicle(info):
-    result = {}
+    result = []
+    rows = None
     if info == "type":
-        None
+        rows = database.vehicle_type()
     elif info == "color":
-        None
+        rows = database.vehicle_color()
     elif info == "make":
-        None
+        rows = database.vehicle_make()
+    for row in rows:
+        result.append({
+            info : row[info],
+            "total" : row["total"]
+        })
     return jsonify(result) 
-    
+
 # location overview
 @app.route("/location")
 def get_location():
