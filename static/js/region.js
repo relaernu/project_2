@@ -131,11 +131,11 @@ function region() {
                 .attr("value", d=>d[currentY]);
 
             var toolTip = d3.tip()
-                .attr("class", "d3tip")
-                .offset([80, -60])
+                .attr("class", "d3-tip")
+                .offset([0, 0])
                 .html(function(d) {
-                    return (`<strong>${d}<strong><hr>${d}`);
-                  });
+                    return (`<strong>${d[currentX]}<strong><hr>${d[currentY]}`);
+                });
             
             circles.call(toolTip);
 
