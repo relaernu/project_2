@@ -8,35 +8,33 @@
 
 
 ## Instructions  
-1. Git pull the project folder. 
+    1. Git pull the project folder. 
 
-2. Download crash stats from https://discover.data.vic.gov.au/dataset/crash-stats-data-extract.
+    2. Download crash stats from https://discover.data.vic.gov.au/dataset/crash-stats-data-extract.
 
 ![Alt text](images/data.png?raw=true "data")
 
-3. Unzip the downloaded folder and copy the files into
- ..\project_2\static\data.
+    3. Unzip the downloaded folder and copy the files into ..\project_2\static\data.
 
 ![Alt text](images/downloaded.png?raw=true "downloaded")
 
-4. Go to 
-https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json and save as features.json to  ..\project_2\static\data.
+    4. Go to https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json and save as features.json to  ..\project_2\static\data.
 
 ![Alt text](images/features.png?raw=true "features")
 
-5. Create a settings.py file and include the required information (ip, username, password, port) for postgresSQL or mySQL. Update your current_database (mysql or postgresql) in line 23. 
+    5. Create a settings.py file and include the required information (ip, username, password, port) for postgresSQL or mySQL. Update your current_database (mysql or postgresql) in line 23. 
 
 ![Alt text](images/settings.png?raw=true "settings")
 
-6. Save settings.py to ..\project_2.
+    6. Save settings.py to ..\project_2.
 
 ![Alt text](images/settings2.png?raw=true "settings")
 
-7. In PostgreSQL, create a database and name it “viccrash”. 
+    7. In PostgreSQL, create a database and name it “viccrash”. 
 
 ![Alt text](images/postgresql.png?raw=true "postgresql")
 
-8. Create a config.js file and include the following information with your API key.
+    8. Create a config.js file and include the following information with your API key.
 
 
 9. Save config.js  to ..\static\js.
