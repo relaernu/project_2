@@ -82,9 +82,6 @@ pyrsistent
 python-dateutil==2.8.1
 python-Levenshtein
 python-slugify==4.0.1
-pytz
-pywin32
-pywinpty
 pyzmq
 requests
 scikit-learn
