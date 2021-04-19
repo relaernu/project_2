@@ -42,6 +42,6 @@ https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-bou
 
 11. Navigate to http://localhost:5000/importdata (windows user) or http://127.0.0.1:5000/importdata (mac user) to import data. 
 
-12. Navigate to http://promenu.com.au:5000/overview to view the project. 
+12. Navigate to http://promenu.com.au:5000/ to view the project dashboard. 
 
 13. Click on the unique buttons to view pages, dashboard and visualisations.
