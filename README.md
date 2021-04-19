@@ -50,4 +50,4 @@
 
     12. Navigate to http://promenu.com.au:5000/ to view the project dashboard. 
 
-    13. Click on the unique buttons to view pages, dashboard and visualisations.
+    13. Click on the unique buttons to view visualisations and pages.
