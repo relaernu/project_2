@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template, url_for, json
 from sqlalchemy.sql.visitors import ReplacingCloningVisitor
 import settings
+import os
 
 # define database to be used ("mysql"|"postgresql")
 # settings.current_database = "postgresql"
@@ -8,6 +9,8 @@ import settings
 import database
 import datetime
 
+
+os.environ.get('DATABASE_URL', '')
 
 app = Flask(__name__)
 
@@ -174,5 +177,6 @@ def loadmysql():
     return jsonify(rows)
 
 if __name__ == "__main__":
-    # app.run(host="0.0.0.0",debug=True)
-    app.run(debug=True)
+    # app.run(host="0.0.0.0", ssl_context='adhoc',debug=True)
+    app.run(host="0.0.0.0", debug=True)
+    # app.run(debug=True)
