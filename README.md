@@ -1,5 +1,3 @@
-# Instructions  
-
 #### [System Requirements]
 1) Python: version 3.8.5 or above 
 2) Pandas: version 1.2.3 or above 
@@ -9,11 +7,12 @@
 6) mysqlclient: 2.0.3 or above (only for using mysql database only)
 
 
+## Instructions  
 1. Git pull the project folder. 
 
 2. Download crash stats from https://discover.data.vic.gov.au/dataset/crash-stats-data-extract.
 
-
+![Alt text](images/data.png?raw=true "data")
 
 3. Unzip the downloaded folder and copy the files into
  ..\project_2\static\data.
