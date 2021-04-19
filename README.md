@@ -16,7 +16,7 @@
 
 3. Unzip the downloaded folder and copy the files into
  ..\project_2\static\data.
-
+![Alt text](images/downloaded.png?raw=true "downloaded")
 
 4. Go to 
 https://data.gov.au/geoserver/vic-local-government-areas-psma-administrative-boundaries/wfs?request=GetFeature&typeName=ckan_bdf92691_c6fe_42b9_a0e2_a4cd716fa811&outputFormat=json and save as features.json to  ..\project_2\static\data.
