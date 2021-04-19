@@ -28,19 +28,19 @@
 
     6. Save settings.py to ..\project_2.
 
-![Alt text](images/settings2.png?raw=true "settings")
+![Alt text](images/settings2.PNG?raw=true "settings")
 
     7. In PostgreSQL, create a database and name it “viccrash”. 
 
-![Alt text](images/postgresql.png?raw=true "postgresql")
+![Alt text](images/postgresql.PNG?raw=true "postgresql")
 
     8. Create a config.js file and include the following information with your API key.
 
-![Alt text](images/config.png?raw=true "config")
+![Alt text](images/config.PNG?raw=true "config")
 
     9. Save config.js  to ..\static\js.
 
-![Alt text](images/config2.png?raw=true "config2")
+![Alt text](images/config2.PNG?raw=true "config2")
 
     10. Open gitbash/terminal and run “conda activate PythonData”. Then run “python app.py” to run flask server. 
 
