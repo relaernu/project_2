@@ -1,11 +1,15 @@
 function person() {
+    // api route
     var url = "/person/";
 
+    // define axis names for easy reference
     var axisNames = ["sex", "age", "injury", "total"];
 
+    // define where to put chart and buttons
     var current_id = "#person";
     var button_id = "#personbtn";
 
+    // define chart name
     var axisDefs = {
         sex: "Male / Female Accidents",
         age: "Total Accidents by Month",
@@ -13,15 +17,21 @@ function person() {
         total: "Total Accidents"
     };
 
+    // initial load axes
     var currentX = axisNames[0];
     var currentY = axisNames[axisNames.length - 1];
 
+    // add button for different aggrigations
     function addButtons() {
         var div = d3.select(button_id);
         for (var i = 0; i < axisNames.length - 1; i++) {
-            div.append("a")
-                .classed("badge badge-success", true)
-                .attr("href", "#")
+            // div.append("a")
+            //     .classed("badge badge-success", true)
+            //     .attr("href", "#")
+            //     .attr("value", axisNames[i])
+            //     .text(capital(axisNames[i]))
+            div.append("button")
+                .classed("btn btn-sm btn-success", true)
                 .attr("value", axisNames[i])
                 .text(capital(axisNames[i]))
         }
@@ -39,13 +49,14 @@ function person() {
     }
 
     function resize(person) {
+        
         var svg = d3.select(current_id).select("svg");
         if (!svg.empty()) {
             svg.remove();
         }
 
         var svgWidth = $(current_id).parent().outerWidth();
-        var svgHeight = (window.innerHeight - $("#header").outerHeight() - $(current_id).parent().children(':first-child').outerHeight()) / 3
+        var svgHeight = $(current_id).parent().outerHeight();
 
         var margin = {
             top: 20,
@@ -66,16 +77,16 @@ function person() {
         var chartGroup = svg.append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-        console.log(currentApi());
+        // console.log(currentApi());
 
         d3.json(currentApi()).then(function (data) {
             // d3.select("body").select("#total").text(data.Total);
-            console.log(data);
+            // console.log(data);
             // data.forEach(d => {
             //     d[currentY] = +d[currentY]
             // });
 
-            console.log(data.length);
+            // console.log(data.length);
 
 
             var xScale = xScaleFunc(chartWidth, data);
@@ -114,7 +125,8 @@ function person() {
                 .attr("width", xScale.bandwidth())
                 .attr("height", d => chartHeight - yScale(d[currentY]))
                 .attr("x", d=>xScale(d[currentX]))
-                .attr("y", d=>yScale(d[currentY]));
+                .attr("y", d=>yScale(d[currentY]))
+                .style("fill","blue");
 
             var numberGroup = rectGroup.append("g");
             var numbers = numberGroup.selectAll("text")
@@ -148,7 +160,7 @@ function person() {
                 .text(capital(currentY));
 
             // add function to button
-            d3.select(button_id).selectAll("a").on("click", function () {
+            d3.select(button_id).selectAll("button").on("click", function () {
                 var value = d3.select(this).attr("value");
                 if (value === currentX) {
                     d3.select(this)
@@ -183,10 +195,10 @@ function person() {
     resize(currentX);
 
     function xScaleFunc(width, data) {
-        console.log("befor");
-        console.log(data);
+        // console.log("befor");
+        // console.log(data);
         var info = data.map(x => x[currentX]);
-        console.log(info);
+        // console.log(info);
         // define padding pixels
         var padding = 20;
         // get x scale
@@ -209,7 +221,7 @@ function person() {
 
     function yScaleFunc(height, data) {
         // define padding pixels
-        console.log(data);
+        // console.log(data);
         var padding = 20;
         // get y scale
         var min = d3.min(data, d => d[currentY]);
@@ -233,7 +245,7 @@ function person() {
     // d3.json(url).then(function(data) {
     //     // d3.select("body").select("#total").text(data.Total);
 
-    //     console.log(data);
+    // //     console.log(data);
     //     //d3.select("body").select("#total").text(data.total);
     // })
 }

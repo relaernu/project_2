@@ -4,10 +4,12 @@ function map() {
     var boundaries_url = "/boundaries";
     var location_url = "/location";
 
-    var rowHeight = $("#firstRow").outerHeight();
-    var headerHeight = $(current_id).parent().children(':first-child').outerHeight();
+    // var rowHeight = $("#firstRow").outerHeight();
+    // var headerHeight = $(current_id).parent().children(':first-child').outerHeight();
 
-    var mapHeight = rowHeight-headerHeight;
+    var mapHeight = $(current_id).parent().outerHeight(); // rowHeight-headerHeight;
+
+    // console.log(mapHeight);
 
     d3.select(current_id)
         .style("height", mapHeight+"px")
@@ -44,7 +46,7 @@ function map() {
 
     function addHeat(map, url) {
         d3.json(url).then(function(data) {
-            console.log(data);
+            // console.log(data);
             var heatArray = [];
             data.forEach(d => {
                 if (d.lat && d.lon) {

@@ -12,13 +12,21 @@ a.badge.active {
     fill: orange;
   }
   
-  .bar:hover {
+.bar:hover {
     fill: green;
-  }
+}
 
 .bartext {
     font-size: smaller;
     fill: "red";
+}
+
+.datacircle {
+  fill: orange;
+}
+
+.datacircle:hover {
+  fill: green;
 }
 
 #map {
@@ -27,4 +35,28 @@ a.badge.active {
   padding-left: 40px;
   padding-right: 20px;
   padding-bottom: 30px;
+}
+
+.btn .btn-sm .btn-success {
+  font:small;
+  font-weight:bolder;
+  /* color:"silver"; */
+  /* "blue", */
+  /* "black", */
+  /* "red", */
+  /* "grey", */
+  /* "green", */
+  /* "gold", */
+  /* "yellow", */
+  /* "aqua", */
+  /* "orange" */
+}
+
+.box {
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 15px;
+  border: 1px solid black;
+  clear: both;
 }

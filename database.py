@@ -73,7 +73,7 @@ def importdata():
     return rows 
 
 
-# def importdata():
+
     # load accident to database
     df_accident = pd.read_csv("static/data/ACCIDENT.csv")
     df_accident.set_index("ACCIDENT_NO", inplace=True)
@@ -114,6 +114,14 @@ def importdata():
     df_vehicle = pd.read_csv("static/data/VEHICLE.csv")
     df_vehicle .set_index(["ACCIDENT_NO", "VEHICLE_ID"], inplace=True)
     df_vehicle.to_sql("Vehicle", engine, if_exists="replace")
+
+### show data
+def data(table):
+    result = engine.execute(f"SELECT * FROM {q}{table}{q} LIMIT 100")
+    df = pd.DataFrame(result.fetchall())
+    df.columns = result.keys()
+    return df.to_html()
+
 
 #### accidents overview ####
 # get total accidents
@@ -200,10 +208,21 @@ def location():
     return result
 
 ### Top 10 Black Postcode
-def location_top10():
+def location_postcode():
     result = engine.execute(f'''SELECT {q}POSTCODE_NO{q} AS postcode, COUNT(1) AS total FROM {q}NODE{q}
                                 GROUP BY {q}POSTCODE_NO{q}
                                 ORDER BY 2 DESC
+                                LIMIT 10''')
+    return result
+
+### region
+### Top 10 Road
+def location_road():
+    result = engine.execute(f'''SELECT n.{q}LGA_NAME{q} AS region, CONCAT(l.{q}ROAD_NAME{q}, ' ', l.{q}ROAD_TYPE{q}) AS road, COUNT(1) AS total
+                                FROM {q}NODE{q} n JOIN {q}ACCIDENT_LOCATION{q} l
+                                ON n.{q}ACCIDENT_NO{q} = l.{q}ACCIDENT_NO{q}
+                                GROUP BY (n.{q}LGA_NAME{q}, l.{q}ROAD_NAME{q}, l.{q}ROAD_TYPE{q})
+                                ORDER BY 3 DESC
                                 LIMIT 10''')
     return result
 
@@ -211,51 +230,70 @@ def location_top10():
 #### vehicle overview
 # top 10 color
 def vehicle_color():
-    result = engine.execute(f'''SELECT {q}VEHICLE_COLOUR_1{q} AS color, COUNT(1) AS total
-                                FROM {q}VEHICLE{q} WHERE TRIM({q}VEHICLE_COLOUR_1{q}) != ''
-                                AND TRIM({q}VEHICLE_COLOUR_1{q}) != 'ZZ'
-                                GROUP BY {q}VEHICLE_COLOUR_1{q}
-                                ORDER BY 2 DESC
-                                LIMIT 10''')
+    sql = f'''WITH top10 (color, total, seq)
+            AS
+            (
+            SELECT {q}VEHICLE_COLOUR_1{q}, COUNT(1), 0 FROM {q}VEHICLE{q}
+            WHERE TRIM({q}VEHICLE_COLOUR_1{q}) != '' AND TRIM({q}VEHICLE_COLOUR_1{q}) != 'ZZ'
+            GROUP BY {q}VEHICLE_COLOUR_1{q}
+            ORDER BY 2 DESC
+            LIMIT 10),
+            rest (color, total)
+            AS
+            (
+            	SELECT 'OTHER', CAST(((SELECT COUNT(*) FROM {q}VEHICLE{q}) - (SELECT SUM(total) FROM top10)) AS INT), 1
+            )
+            SELECT * FROM top10
+            UNION
+            SELECT * FROM rest
+            ORDER BY seq ASC, total DESC'''
+    result = engine.execute(sql)
     return result
 
 # top 10 make
 def vehicle_make():
-    result = engine.execute(f'''WITH top10 (make, total)
-                                AS
-                                (
-                                SELECT "VEHICLE_MAKE", COUNT(1) FROM "VEHICLE"
-                                WHERE TRIM("VEHICLE_MAKE") != '' AND TRIM("VEHICLE_MAKE") != 'UNKN'
-                                GROUP BY "VEHICLE_MAKE"
-                                ORDER BY 2 DESC
-                                LIMIT 10),
-                                rest (make, total)
-                                AS
-                                (
-                                	SELECT 'OTHER', ((SELECT COUNT(*) FROM "VEHICLE") - (SELECT COUNT(*) FROM top10))
-                                )
-                                SELECT * FROM top10
-                                UNION
-                                SELECT * FROM rest
-                                ORDER BY 2 DESC''')
-# def vehicle_make():
-#     result = engine.execute(f'''SELECT TRIM({q}VEHICLE_MAKE{q}) AS make, COUNT(1) as total FROM {q}VEHICLE{q}
-#                                 WHERE TRIM({q}VEHICLE_MAKE{q}) != '' AND TRIM({q}VEHICLE_MAKE{q}) != 'UNKN'
-#                                 GROUP BY {q}VEHICLE_MAKE{q}
-#                                 ORDER BY 2 DESC
-#                                 LIMIT 10''')
-#     return result
-
-
-# top 10 vechicle type
-def vehicle_type():
-    result = engine.execute(f'''SELECT {q}Vehicle Type Desc{q} AS type, COUNT(1) AS total FROM {q}VEHICLE{q}
-                                GROUP BY {q}Vehicle Type Desc{q}
-                                ORDER BY 2 DESC
-                                LIMIT 10''')
+    sql = f'''WITH top10 (make, total, seq)
+            AS
+            (
+            SELECT {q}VEHICLE_MAKE{q}, COUNT(1), 0 FROM {q}VEHICLE{q}
+            WHERE TRIM({q}VEHICLE_MAKE{q}) != '' AND TRIM({q}VEHICLE_MAKE{q}) != 'UNKN'
+            GROUP BY {q}VEHICLE_MAKE{q}
+            ORDER BY 2 DESC
+            LIMIT 10),
+            rest (make, total, seq)
+            AS
+            (
+            	SELECT 'OTHER', CAST(((SELECT COUNT(*) FROM {q}VEHICLE{q}) - (SELECT SUM(total) FROM top10)) AS INT), 1
+            )
+            SELECT * FROM top10
+            UNION
+            SELECT * FROM rest
+            ORDER BY seq ASC, total DESC'''
+    result = engine.execute(sql)
     return result
 
-#### weather condition overview
+def vehicle_type():
+    sql = f'''WITH top10 (type, total, seq)
+            AS
+            (
+            SELECT {q}Vehicle Type Desc{q}, COUNT(1), 0 FROM {q}VEHICLE{q}
+            WHERE TRIM({q}Vehicle Type Desc{q}) != '' -- AND TRIM({q}Vehicle Type Desc{q})
+            GROUP BY {q}Vehicle Type Desc{q}
+            ORDER BY 2 DESC
+            LIMIT 10),
+            rest (type, total, seq)
+            AS
+            (
+            	SELECT 'Other', CAST(((SELECT COUNT(*) FROM {q}VEHICLE{q}) - (SELECT SUM(total) FROM top10)) AS INT), 1
+            )
+            SELECT * FROM top10
+            UNION
+            SELECT * FROM rest
+            ORDER BY seq ASC, total DESC'''
+    result = engine.execute(sql)
+    return result
+
+
 
 
 
