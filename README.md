@@ -36,14 +36,18 @@
 
     8. Create a config.js file and include the following information with your API key.
 
+![Alt text](images/config.png?raw=true "config")
 
-9. Save config.js  to ..\static\js.
+    9. Save config.js  to ..\static\js.
 
+![Alt text](images/config2.png?raw=true "config2")
 
-10. Open gitbash/terminal and run “conda activate PythonData”. Then run “python app.py” to run flask server. 
+    10. Open gitbash/terminal and run “conda activate PythonData”. Then run “python app.py” to run flask server. 
 
-11. Navigate to http://localhost:5000/importdata (windows user) or http://127.0.0.1:5000/importdata (mac user) to import data. 
+    11. Navigate to http://localhost:5000/importdata (windows user) or http://127.0.0.1:5000/importdata (mac user) to import data. 
 
-12. Navigate to http://promenu.com.au:5000/ to view the project dashboard. 
+![Alt text](images/importdata.png?raw=true "importdata")
 
-13. Click on the unique buttons to view pages, dashboard and visualisations.
+    12. Navigate to http://promenu.com.au:5000/ to view the project dashboard. 
+
+    13. Click on the unique buttons to view pages, dashboard and visualisations.
