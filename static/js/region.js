@@ -134,7 +134,7 @@ function region() {
                 .attr("class", "d3-tip")
                 .offset([0, 0])
                 .html(function(d) {
-                    return (`<strong>${d[currentX]}<strong><hr>${d[currentY]}`);
+                    return (`<strong>${currentX} : ${d[currentX]}<strong><hr>${currentY} : ${d[currentY]}`);
                 });
             
             circles.call(toolTip);
