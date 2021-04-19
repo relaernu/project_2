@@ -16,6 +16,7 @@
 
 3. Unzip the downloaded folder and copy the files into
  ..\project_2\static\data.
+
 ![Alt text](images/downloaded.png?raw=true "downloaded")
 
 4. Go to 
