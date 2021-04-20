@@ -109,23 +109,65 @@
                 </div>
                 <div class="typography-line">
                   <p>
-                    CrashStats data is made available by VicRoads and provides information about road crashes in Victoria for educational purposes. 
-                    The dataset contained accident details from January 2006 to November 2020. This data allows users to analyse the correlation between driver, vehicle, weather and area that was involved in a crash.
-                    It can also be used by an insurance company to determine the prices of premiums to quote a particular individual. The more accident prone the individual is, thus the higher the premium.
-                    Or which roads and what suburbs have the most crashes. Furthermore, local councils can use the data to identify the roads that need fixing.
+                    CrashStats data is made available by VicRoads and provides information about road crashes in
+                    Victoria for educational purposes.
+                    The dataset contained accident details from January 2006 to November 2020. This data allows users to
+                    analyse the correlation between driver, vehicle, weather and area that was involved in a crash.
+                    It can also be used by an insurance company to determine the prices of premiums to quote a
+                    particular individual. The more accident prone the individual is, thus the higher the premium.
+                    Or which roads and what suburbs have the most crashes. Furthermore, local councils can use the data
+                    to identify the roads that need fixing.
                   </p>
                   <h4>Dashboard Design</h4>
-                </div>
-                <div class="typography-line">
-                  <p>
-                    During our brainstorming session, we googled and reviewed existing dashboards, and subsequently dashboards specifically relating to road accidents. 
-                    As we have extensive data, we decided to create an interactive dashboard as it allows users to filter and explore the data from different perspectives or in more detail. 
-                    For visualisations, we have created maps, bar charts and line graphs. 
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+                  </div>
+                  <div class="typography-line">
+                    <p>
+                      During our brainstorming session, we googled and reviewed existing dashboards, and subsequently
+                      dashboards specifically relating to road accidents.
+                      As we have extensive data, we decided to create an interactive dashboard as it allows users to
+                      filter and explore the data from different perspectives or in more detail.
+                      For visualisations, we have created maps, bar charts and line graphs.
+                    </p>
+                    <h4>Data wrangling</h4>
+                  </div>
+                  <div class="typography-line">
+                    <p>
+                      We obtained the data from VicRoads and these csv are very clean and no cleaning need to be done.
+                      The datas then were loaded into pandas for some conversion to be done before loading it into database.
+                      After tidyng up the data, it was then loaded into sqlalchemy and we prepared 2 choices of data base: mysql and
+                      postgresql.
+                      Flask API was made to query the data and return the result as json format. Then the template was rendered and used
+                      javascript to retrieve the data & visualise it.
+                    </p>
+                  </div>
+                  <h4>Improvements</h4>
+                  </div>
+                  <div class="typography-line">
+                    <ul>
+                      <li>
+                        More joins with data as there were many things that we could've done with the big data set and this could lead
+                        into more visualisations
+                      </li>
+                      <li>
+                        Adding more information, possibly compare the data set with other states.
+                      </li>
+                    </ul>
+                  </div>
+                  <h4>Challenges</h4>
+                  </div>
+                  <div class="typography-line">
+                    <ul>
+                      <li>
+                        Some of the coding did not work for all the members and getting the project to work was not easy
+                      </li>
+                      <li>
+                        Working with all element at the same time was complicated to do
+                      </li>
+                      <li>
+                        Using different program which in this case Tableau could save us time for the visualisation.
+                      </li>
+                    </ul>
+                  </div>
         </div>
       </div>
       <footer class="footer">
